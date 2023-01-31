@@ -11,4 +11,4 @@ This plugin for BDSX.
 
 # Other
 * [Github](https://github.com/ItzCandra23/claim-land)
-* [Report Bugs](https://github.com/ItzCandra23/claim-land/issue)
+* [Report Bugs](https://github.com/ItzCandra23/claim-land/issues)
