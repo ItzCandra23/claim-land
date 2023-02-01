@@ -13,6 +13,9 @@ function protect(pos: LandPosXZ, actor: Actor): void|CANCEL {
         if (owner && members) {
             if (owner === actor.getXuid()) return;
             if (members.includes(actor.getXuid())) return;
+
+            actor.playSound("mob.villager.no");
+            actor.sendJukeboxPopup(`This land has claimed!`);
             return CANCEL;
         }
     }
@@ -29,3 +32,4 @@ events.itemUseOnBlock.on((ev) => protect({x: ev.clickX, z: ev.clickZ}, ev.actor)
 events.levelExplode.on((ev) => protect(ev.position, ev.entity));
 events.playerAttack.on((ev) => protect(ev.victim.getPosition(), ev.player));
 events.playerSleepInBed.on((ev) => protect(ev.pos, ev.player));
+events.entityStartRiding.on((ev) => protect(ev.entity.getPosition(), ev.ride));

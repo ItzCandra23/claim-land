@@ -5,7 +5,7 @@ import { ServerPlayer } from "bdsx/bds/player";
 import { events } from "bdsx/event";
 import { ConfigLand } from "..";
 import "./command";
-import "./navigation";
+import "./protect";
 import "./navigation";
 
 let land: LandData[] = [];
@@ -43,8 +43,8 @@ export namespace LandMain {
             owner: player.getXuid(),
             members: [],
         };
-        land.push(newLand);
         player.sendMessage(`§aSuccess to claim land §r${pos.toString()}`);
+        land.push(newLand);
 
         return true;
     }
@@ -54,8 +54,8 @@ export namespace LandMain {
         let claim = getLand(pos)
         if (claim) {
             if (claim.owner === player.getXuid()) {
-                land=land.filter((value, i) => i !== getLandIndex(pos));
                 player.sendMessage(`§aSuccess to delete your land §r${claim.land.toString()}`);
+                land=land.filter((value, i) => i !== getLandIndex(pos));
                 return true;
             }
             else {
@@ -84,9 +84,9 @@ export namespace LandMain {
                         return false;
                     }
 
-                    land[getLandIndex(pos)].owner=owner.getXuid();
                     player.sendMessage(`§aSuccess to change owner land to §e${owner.getNameTag()}`);
                     owner.sendMessage(`§e${player.getNameTag()}§a has changed owner land to you §r${claim.land.toString()}`);
+                    land[getLandIndex(pos)].owner=owner.getXuid();
                     return true;
                 }
             }
@@ -120,9 +120,9 @@ export namespace LandMain {
                         return false;
                     }
 
-                    land[getLandIndex(pos)].members.push(member.getXuid());
                     player.sendMessage(`§aSuccess to add §e${member.getNameTag()}§r§a as member in your land §r${claim.land.toString()}`);
                     member.sendMessage(`§e${player.getNameTag()}§r§a has added you from his land §r${claim.land.toString()}`);
+                    land[getLandIndex(pos)].members.push(member.getXuid());
                     return true;
                 }
             }
@@ -148,9 +148,9 @@ export namespace LandMain {
                 }
                 else {
                     if (claim.members.includes(member.getXuid())) {
-                        land[getLandIndex(pos)].members=land[getLandIndex(pos)].members.filter((value) => value !== member.getXuid());
                         player.sendMessage(`§aSuccess to remove §e${member.getNameTag()}§r§a as member in your land §r${claim.land.toString()}`);
                         member.sendMessage(`§e${player.getNameTag()}§r§a has removed you from his member land §r${claim.land.toString()}`);
+                        land[getLandIndex(pos)].members=land[getLandIndex(pos)].members.filter((value) => value !== member.getXuid());
                         return true;
                     }
                     else {
